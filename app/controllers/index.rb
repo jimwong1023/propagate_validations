@@ -9,9 +9,16 @@ get '/events/:id/show' do |id|
 end
 
 get '/events/new' do
-  #TODO IMPLEMENT ME
+  erb :create_event
 end
 
 post '/events/create' do
-  #TODO IMPLEMENT ME
+  event = Event.new(title: params[:title], organizer_name: params[:organizer_name], organizer_email: params[:organizer_email], date: params[:date])
+
+  if event.save
+    redirect '/'
+  else
+    @errors = event.errors.full_messages
+    erb :create_event
+  end
 end
